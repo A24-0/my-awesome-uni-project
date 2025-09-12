@@ -17,14 +17,25 @@
 
 <body>
     <!-- Шапка сайта -->
-    <header>
+    <!-- Главное меню навигации -->
+    <!-- <header>
         <a href="/">Логотип или название сайта</a>
-        <!-- Главное меню навигации -->
         <nav>
             <ul>
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">О нас</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header> -->
+    <header class="site-header">
+        <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="#contacts">Связаться</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -34,6 +45,9 @@
         <!-- Секция 1 с якорем -->
         <section id="services">
             <h2>Наши услуги</h2>
+            <!-- Браузер сам выбирает лучший ресурс по ширине контейнера -->
+            <img src="../images/cat.jpg" srcset="../images/cat.jpg 640w, ../images/cat.jpg 960w, ../images/cat.jpg 1280w" sizes="(max-width: 700px) 92vw, (max-width: 1200px) 640px, 960px" alt="Котик"
+                loading="lazy">
             <p>Описание предоставляемых услуг...</p>
             <a href="#contacts">Связаться с нами</a> <!-- Якорная ссылка внутри страницы -->
         </section>
@@ -84,6 +98,20 @@
             </form>
         </dialog>
     </section>
+    <script defer>
+        const KEY = 'theme', btn = document.querySelector('.theme-toggle');
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        if (localStorage.getItem(KEY) === 'dark' || (!localStorage.getItem(KEY) &&
+            prefersDark)) {
+            document.body.classList.add('theme-dark');
+            btn?.setAttribute('aria-pressed', 'true');
+        }
+        btn?.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('theme-dark');
+            btn.setAttribute('aria-pressed', String(isDark));
+            localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+        });
+    </script>
     <!-- Подвал сайта -->
     <footer>
         <p>&copy; 2023 Название вашего сайта. Все права защищены.</p>

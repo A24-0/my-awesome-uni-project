@@ -10,25 +10,26 @@
     <meta property="og:title" content="Заголовок страницы"> 
     <meta property="og:description" content="Описание страницы"> 
     <meta property="og:image" content="https://.../link-to-image.jpg">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
 </head>
 <body> 
-    <header> 
-        <a href="/">Логотип или название сайта</a> 
-        <!-- Главное меню навигации --> 
-        <nav> 
-            <ul> 
-                <li><a href="index.html">Главная</a></li> 
-                <li><a href="about.html">О нас</a></li> 
-                <li><a href="contacts.html">Контакты</a></li> 
-            </ul> 
-        </nav> 
+    <header class="site-header">
+        <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--active site-nav__link--cta" href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
     </header> 
     <main>
         <!-- Простые "хлебные крошки" --> 
-        <!-- <nav aria-label="Хлебные крошки"> 
+        <nav class="breadcrumb" aria-label="Хлебные крошки"> 
             <a href="index.html">Главная</a> → 
             <span>Контакты</span> 
-        </nav>  -->
+        </nav>
         <h1>Контакты</h1> 
         <section> 
             <h2>Менеджер</h2> 
@@ -38,7 +39,21 @@
             <h2>Директор</h2> 
             <p>Номер телефона</p> 
         </section> 
-    </main> 
+    </main>
+    <script defer>
+        const KEY = 'theme', btn = document.querySelector('.theme-toggle');
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        if (localStorage.getItem(KEY) === 'dark' || (!localStorage.getItem(KEY) &&
+            prefersDark)) {
+            document.body.classList.add('theme-dark');
+            btn?.setAttribute('aria-pressed', 'true');
+        }
+        btn?.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('theme-dark');
+            btn.setAttribute('aria-pressed', String(isDark));
+            localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+        });
+    </script>
     <footer> 
         <p>&copy; 2023 Название вашего сайта. Все права защищены.</p> 
         <p>Телефон: +7 (123) 456-78-90</p>

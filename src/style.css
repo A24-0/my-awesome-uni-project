@@ -1,3 +1,43 @@
+:root {
+    /* Палитра */
+    --color-bg: #fff;
+    --color-fg: #0b0b0b;
+    --color-muted: #666;
+    --color-primary: #0a84ff;
+    --color-danger: #b00020;
+    /* Типографика и размеры */
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 16px;
+    --space-4: 24px;
+    --space-5: 40px;
+    /* Скругления и тени */
+    --radius: 12px;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .08);
+}
+
+:root {
+    color-scheme: light;
+}
+
+/* Светлые скроллбары/контролы по
+умолчанию */
+body.theme-dark {
+    color-scheme: dark;
+}
+
+/* Тёмные — при активной теме */
+
+/* Тёмная тема: переопределяем только значения токенов */
+body.theme-dark {
+    --color-bg: #0b0b0b;
+    --color-fg: #f5f5f5;
+    --color-muted: #aaa;
+    --color-primary: #6aa2ff;
+}
+
+/* Reset-минимум — подробнее в 1.8 */
 * {
     box-sizing: border-box;
 }
@@ -9,10 +49,12 @@ body {
 }
 
 body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-        sans-serif;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-body);
     line-height: 1.5;
 }
+
 
 /* Формы: размеры, отступы, визуальный порядок */
 label {
@@ -27,38 +69,283 @@ button {
     width: 100%;
     max-width: 480px;
     padding: .5rem .75rem;
-    border: 1px solid #c8c8c8;
+    border: 1px solid var(--color-muted);
     border-radius: 8px;
-    background: #fff;
+    background: var(--color-bg);
+    color: var(--color-fg);
     margin-bottom: 5px;
 }
 
 /* Кнопка по умолчанию */
 button,
 [type="submit"] {
-    background: #0a84ff;
+    background: var(--color-primary);
     color: #fff;
     border: none;
     cursor: pointer;
 }
 
-/* Состояния: клавиатура/мышь/ошибки */
-:where(input, select, textarea, button):focus-visible {
-    outline: 2px solid #0a84ff;
-    outline-offset: 2px;
-}
 
 button:hover {
     filter: brightness(0.95);
 }
 
+/* Подсветка ошибочных полей (установите aria-invalid="true") */
+[aria-invalid="true"] {
+    border-color: #b00020;
+}
+
+/* :where(...) не добавляет специфичности — проще переопределять позже */
+:where(a, button, input, select, textarea):focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Недоступные элементы визуально «приглушаем» */
 :disabled,
 [aria-disabled="true"] {
     opacity: .6;
     cursor: not-allowed;
 }
 
-/* Подсветка ошибочных полей (установите aria-invalid="true") */
-[aria-invalid="true"] {
-    border-color: #b00020;
+html {
+    scroll-behavior: smooth;
+}
+
+/* Плавная прокрутка к #якорю */
+:target {
+    outline: 2px dashed var(--color-primary);
+    outline-offset: 4px;
+}
+
+/*
+Подсветка цели */
+
+/* Центровка и ограничение ширины контейнера */
+.container {
+    width: min(100% - 2*var(--space-4), 1120px);
+    margin-inline: auto;
+}
+
+/* Вертикальные отступы секций по токенам */
+.section {
+    padding-block: var(--space-5);
+}
+
+.section__title {
+    margin: 0 0 var(--space-3);
+}
+
+/* БЭМ-компонент: Шапка сайта */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-bg);
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.site-header__brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.site-header__brand:hover {
+    color: var(--color-fg);
+}
+
+/* БЭМ-компонент: Навигация */
+.site-nav__list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-4);
+}
+
+.site-nav__link {
+    color: var(--color-fg);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius);
+    transition: all 0.2s ease;
+}
+
+.site-nav__link:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.site-nav__link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.site-nav__link--cta {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+.site-nav__link--cta:hover {
+    background: var(--color-fg);
+    color: var(--color-bg);
+}
+
+/* Активный пункт меню */
+.site-nav__link--active {
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 500;
+}
+
+/* Хлебные крошки */
+.breadcrumb {
+    margin: var(--space-3) 0;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.breadcrumb a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: var(--color-fg);
+    font-weight: 500;
+}
+
+/* Улучшенные стили форм */
+.form-actions {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+
+.form-actions button {
+    flex: 1;
+    max-width: none;
+}
+
+/* Модальное окно */
+dialog {
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: var(--space-4);
+    max-width: 500px;
+    width: 90vw;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Переключатель темы */
+.theme-toggle {
+    width: auto;
+    max-width: none;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--color-fg);
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Медиа не «выпрыгивают» из контейнеров */
+img,
+video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-muted);
+    opacity: 1;
+}
+
+.card__img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--radius);
+    display: block;
+}
+
+/* Герой-секция: затемняющий градиент поверх фонового изображения */
+.hero {
+    background:
+        linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .15)),
+        /* оверлей для
+контраста текста */
+        url("images/cat.jpg") center/cover no-repeat;
+    /* картинка
+как декор */
+    color: #fff;
+    padding: clamp(2rem, 6vw, 6rem) 1rem;
+    /* адаптивные
+отступы */
+    border-radius: var(--radius);
+}
+
+.hero {
+    background-image:
+        linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .15)),
+        image-set(url("images/cat.jpg") 1x,
+            /* обычные экраны */
+            url("images/cat.jpg") 2x
+            /* плотные экраны */
+        );
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* Контейнер с фиксированным соотношением сторон для <iframe>/<video> */
+.media {
+    aspect-ratio: 16/9;
+    /* удерживаем пропорцию блока */
+    width: min(100%, 960px);
+    /* не шире 960px, но адаптивен */
+    margin-inline: auto;
+    /* центрируем блок */
+}
+
+.media iframe,
+.media video {
+    width: 100%;
+    height: 100%;
+    /* медиа занимает всю площадь контейнера
+*/
+    border: 0;
+    border-radius: var(--radius);
 }
