@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+        sans-serif;
+    line-height: 1.5;
+}
+
+/* Формы: размеры, отступы, визуальный порядок */
+label {
+    display: block;
+    margin: 0.5rem 0 0.25rem;
+}
+
+input,
+select,
+textarea,
+button {
+    width: 100%;
+    max-width: 480px;
+    padding: .5rem .75rem;
+    border: 1px solid #c8c8c8;
+    border-radius: 8px;
+    background: #fff;
+    margin-bottom: 5px;
+}
+
+/* Кнопка по умолчанию */
+button,
+[type="submit"] {
+    background: #0a84ff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Состояния: клавиатура/мышь/ошибки */
+:where(input, select, textarea, button):focus-visible {
+    outline: 2px solid #0a84ff;
+    outline-offset: 2px;
+}
+
+button:hover {
+    filter: brightness(0.95);
+}
+
+:disabled,
+[aria-disabled="true"] {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* Подсветка ошибочных полей (установите aria-invalid="true") */
+[aria-invalid="true"] {
+    border-color: #b00020;
+}
