@@ -10,10 +10,38 @@
     <meta property="og:title" content="Заголовок страницы">
     <meta property="og:description" content="Описание страницы">
     <meta property="og:image" content="https://.../link-to-image.jpg">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <h1>Спасибо за обращение!</h1>
-    <p>Мы свяжемся с вами в ближайшее время.</p>
-    <a href="index.html">Вернуться на главную</a>
+    <header class="site-header">
+        <button class="theme-toggle" type="button" aria-pressed="false">Тема</button>
+        <nav class="site-nav" aria-label="Основная навигация">
+            <ul class="site-nav__list">
+                <li class="site-nav__item"><a class="site-nav__link" href="index.html">Главная</a></li>
+                <li class="site-nav__item"><a class="site-nav__link" href="about.html">О нас</a></li>
+                <li class="site-nav__item"><a class="site-nav__link site-nav__link--cta" href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Спасибо за обращение!</h1>
+        <p>Мы свяжемся с вами в ближайшее время.</p>
+        <a href="index.html">Вернуться на главную</a>
+    </main>
+    <script defer>
+        const KEY = 'theme', btn = document.querySelector('.theme-toggle');
+        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+        if (localStorage.getItem(KEY) === 'dark' || (!localStorage.getItem(KEY) &&
+            prefersDark)) {
+            document.body.classList.add('theme-dark');
+            btn?.setAttribute('aria-pressed', 'true');
+        }
+        btn?.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('theme-dark');
+            btn.setAttribute('aria-pressed', String(isDark));
+            localStorage.setItem(KEY, isDark ? 'dark' : 'light');
+        });
+    </script>
 </body>
 </html>

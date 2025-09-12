@@ -1,12 +1,12 @@
  <?xml version="1.0" encoding="UTF-8"?> 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
     <url> 
-        <loc>https://ваш-логин.github.io/имя-репозитория/</loc> 
+        <loc>https://A24-0.github.io/my-awesome-uni-project/</loc> 
     </url>
     <url> 
-        <loc>https://ваш-логин.github.io/имя-репозитория/about.html</loc> 
+        <loc>https://A24-0.github.io/my-awesome-uni-project/about.html</loc> 
     </url>
     <url> 
-        <loc>https://ваш-логин.github.io/имя-репозитория/contacts.html</loc> 
+        <loc>https://A24-0.github.io/my-awesome-uni-project/contacts.html</loc> 
     </url>
  </urlset>
